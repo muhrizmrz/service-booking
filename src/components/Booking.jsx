@@ -4,6 +4,7 @@ import Service from "./Service";
 import Address from "./Address";
 import Proceed from "./Proceed";
 import api from "../api";
+import toast, { Toaster } from "react-hot-toast";
 
 const Booking = () => {
   const [index, setIndex] = useState(1);
@@ -42,7 +43,7 @@ const Booking = () => {
       return;
     }
     if (Object.values(serviceData).some((field) => !field)) {
-      alert("Please fill all fields");
+      toast.error("Please fill all fields");
       setStatus((prev) => ({ ...prev, service: false }));
       return false;
     }
@@ -67,7 +68,7 @@ const Booking = () => {
       !serviceData.date ||
       !serviceData.time
     ) {
-      alert("Please fill all fields");
+      toast.error("Please fill all fields");
       return false;
     }
     setStatus((prev) => ({ ...prev, service: true }));
@@ -99,7 +100,7 @@ const Booking = () => {
 
   const addressHandler = (next) => {
     if (Object.values(addressData).some((field) => !field)) {
-      alert("Please fill all address fields");
+      toast.error("Please fill all address fields");
       setStatus((prev) => ({ ...prev, address: false }));
       return false;
     }
@@ -114,7 +115,7 @@ const Booking = () => {
 
   const submitHandler = async () => {
     if (!status.address || !status.service) {
-      alert("Fill all fields!");
+      toast.error("Fill all fields!");
     }
     try {
       const newArray = services.map(({ service, staff, staffPrice, date, time }) => ({
@@ -128,7 +129,7 @@ const Booking = () => {
         services: newArray,
         address: addressData,
       });
-      alert("Booking submitted successfully!");
+      toast.success("Booking submitted successfully!");
       setServiceData({
         branch: "",
         category: "",
@@ -182,9 +183,10 @@ const Booking = () => {
   };
 
   return (
-    <div className="w-full grid place-items-center pb-20">
-      <div className="w-5/6 p-6 bg-white rounded-2xl shadow-2xl -mt-20">
-        <div className="p-3 flex justify-between gap-2">
+    <div className="w-full grid place-items-center pb-20 bg-white">
+      <Toaster />
+      <div className="w-11/12 sm:w-5/6 p-3 py-5 sm:p-6 bg-white rounded-2xl shadow-2xl -mt-20">
+        <div className="p-0 sm:p-3 flex justify-normal sm:justify-between gap-0 sm:gap-2">
           <Step
             i={1}
             index={index}

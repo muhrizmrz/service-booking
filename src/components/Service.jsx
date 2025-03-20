@@ -15,6 +15,7 @@ const Service = ({
   const [categories, setCategories] = useState([]);
   const [servicesData, setServicesData] = useState([]);
   const [staffData, setStaffData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,19 +70,23 @@ const Service = ({
 
   const onChange = (e, name) => {
     const obj = {};
-    if(name === "service") {
+    if (name === "service") {
       setFormData((prev) => ({
         ...prev,
         [name]: e.target.value,
-        [name+"Name"]: servicesData.find((item) => item._id === e.target.value)?.name,
+        [name + "Name"]: servicesData.find(
+          (item) => item._id === e.target.value
+        )?.name,
         time: "",
       }));
     } else if (name === "staff") {
       setFormData((prev) => ({
         ...prev,
         [name]: e.target.value,
-        [name+"Name"]: staffData.find((item) => item._id === e.target.value)?.name,
-        [name+"Price"]: staffData.find((item) => item._id === e.target.value)?.price,
+        [name + "Name"]: staffData.find((item) => item._id === e.target.value)
+          ?.name,
+        [name + "Price"]: staffData.find((item) => item._id === e.target.value)
+          ?.price,
         time: "",
       }));
     } else {
@@ -91,13 +96,12 @@ const Service = ({
         time: "",
       }));
     }
-
   };
 
   return (
     <div className="p-3">
       <form>
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <Select
             label="Branch"
             name="branch"
@@ -122,34 +126,40 @@ const Service = ({
             name="service"
             onChange={onChange}
           />
-          <div className="">
+          <div className="w-full">
             <label
               htmlFor="select-input"
-              className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-lg font-medium text-gray-900"
             >
               Staff
             </label>
-            <select
-              id="select-input"
-              value={formData.staff}
-              required
-              name="staff"
-              onChange={(e) => onChange(e, "staff")}
-              className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-            >
-              <option value="">Select an Option</option>
-              {staffData.map((item) => (
-                <option value={item._id}>
-                  {item.name} - INR{item.price}
-                </option>
-              ))}
-            </select>
+            {staffData.length === 0 ? (
+              <div className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3">
+                Loading...
+              </div>
+            ) : (
+              <select
+                id="select-input"
+                value={formData.staff}
+                required
+                name="staff"
+                onChange={(e) => onChange(e, "staff")}
+                className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+              >
+                <option value="">Select an Option</option>
+                {staffData.map((item) => (
+                  <option value={item._id}>
+                    {item.name} - INR{item.price}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
-          <div className="col-span-2">
+          <div className="col-span-1 lg:col-span-2">
             <label
               htmlFor="date"
-              className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-lg font-medium text-gray-900 "
             >
               Date
             </label>
@@ -163,10 +173,10 @@ const Service = ({
             />
           </div>
 
-          <div className="col-span-2">
+          <div className="col-span-1 lg:col-span-2">
             <label
               htmlFor="time"
-              className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-lg font-medium text-gray-900"
             >
               Time
             </label>
@@ -191,7 +201,7 @@ const Service = ({
             </div>
           </div>
 
-          <div className="col-span-4 flex justify-between">
+          <div className="col-span-1 lg:col-span-4 flex flex-col lg:flex-row justify-between">
             You've Selected {formData.time} On{" "}
             {new Date(formData.date).toLocaleDateString("en-US", {
               weekday: "long",
@@ -209,7 +219,7 @@ const Service = ({
           </div>
 
           {services.length > 0 && (
-            <div className="mt-8 col-span-4">
+            <div className="mt-8 col-span-1 lg:col-span-4 overflow-x-scroll">
               <ServiceTable
                 services={services}
                 servicesData={servicesData}

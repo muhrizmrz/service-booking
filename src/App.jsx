@@ -11,7 +11,7 @@ function App() {
       <Header />
       <div className="h-[30rem] bg-cover bg-[url('/bg.jpg')]">
           <div className='w-full h-full bg-black/25 grid place-items-center pb-8'>
-          <h3 className='text-white font-bold text-4xl text-center'>Appointment Booking</h3>
+          <h3 className='text-white font-bold text-3xl sm:text-4xl text-center'>Appointment Booking</h3>
           </div>
       </div>
       <Booking />

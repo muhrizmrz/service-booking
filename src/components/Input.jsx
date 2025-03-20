@@ -2,10 +2,10 @@ import React from "react";
 
 const Input = ({label, type = "text", name, value, onChange, required}) => {
   return (
-    <div>
+    <div className="flex flex-col">
       <label
         htmlFor={name}
-        className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
+        className="block mb-2 text-lg font-medium text-gray-900"
       >
         {label}
       </label>

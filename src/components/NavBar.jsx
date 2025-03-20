@@ -2,7 +2,7 @@ import React from 'react'
 
 const NavBar = () => {
   return (
-    <nav className='inline-flex gap-3'>
+    <nav className='hidden sm:inline-flex gap-3'>
         <a>Home</a>
         <a>Home</a>
         <a>Home</a>

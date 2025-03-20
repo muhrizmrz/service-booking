@@ -5,9 +5,9 @@ const Address = ({ formData, setFormData }) => {
   console.log(formData);
 
   return (
-    <div className="p-3">
+    <div className="w-full p-3">
       <form>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-3">
           <Input
             label="Full Name"
             name="fullName"
@@ -65,10 +65,10 @@ const Address = ({ formData, setFormData }) => {
               setFormData((prev) => ({ ...prev, district: e.target.value }))
             }
           />
-          <div className="col-span-2">
+          <div className="col-span-1 sm:col-span-2">
             <label
               htmlFor="streetAddress"
-              className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-lg font-medium text-gray-900"
             >
               Street Address
             </label>
@@ -87,10 +87,10 @@ const Address = ({ formData, setFormData }) => {
               rows="3"
             ></textarea>
           </div>
-          <div className="col-span-2">
+          <div className="col-span-1 sm:col-span-2">
             <label
               htmlFor="serviceRemarks"
-              className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-lg font-medium text-gray-900"
             >
               Service Remarks
             </label>
