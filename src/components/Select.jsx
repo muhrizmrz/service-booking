@@ -1,6 +1,6 @@
 import React from "react";
 
-const Select = ({ label, options, value, onChange, name, required = false }) => {
+const Select = ({ label, options, value, onChange, name, required = false, loading }) => {
   return (
     <div className="w-full">
       <label
@@ -9,7 +9,7 @@ const Select = ({ label, options, value, onChange, name, required = false }) => 
       >
         {label}
       </label>
-      {options.length === 0 ? (
+      {loading ? (
         <div
           className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
         >

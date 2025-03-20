@@ -11,14 +11,18 @@ const Service = ({
   removeService,
   services,
 }) => {
+  const [loading, setLoading] = useState(false);
+  const [loadingServices, setLoadingServices] = useState(false);
+  const [loadingStaff, setLoadingStaff] = useState(false);
   const [branches, setBranches] = useState([]);
   const [categories, setCategories] = useState([]);
   const [servicesData, setServicesData] = useState([]);
   const [staffData, setStaffData] = useState([]);
-  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const branchItems = await api.get("/branch");
         const categoryItems = await api.get("/category");
@@ -26,30 +30,36 @@ const Service = ({
         setCategories(categoryItems.data);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
-  });
+  }, []);
 
   useEffect(() => {
     if (formData.branch && formData.service) {
+      setLoadingStaff(true);
       api
         .get(
           `/staffs?branchId=${formData.branch}&serviceId=${formData.service}`
         )
         .then((res) => setStaffData(res.data))
-        .catch((err) => console.error("Error fetching categories:", err));
+        .catch((err) => console.error("Error fetching categories:", err))
+        .finally(() => setLoadingStaff(false))
     }
   }, [formData.branch, formData.service]);
 
   useEffect(() => {
     if (formData.branch && formData.category) {
+      setLoadingServices(true);
       api
         .get(
           `/services?branchId=${formData.branch}&categoryId=${formData.category}`
         )
         .then((res) => setServicesData(res.data))
-        .catch((err) => console.error("Error fetching categories:", err));
+        .catch((err) => console.error("Error fetching categories:", err))
+        .finally(() => setLoadingServices(false));
     }
   }, [formData.branch, formData.category]);
 
@@ -106,6 +116,7 @@ const Service = ({
             label="Branch"
             name="branch"
             required
+            loading={loading}
             value={formData.branch}
             options={branches}
             onChange={onChange}
@@ -114,6 +125,7 @@ const Service = ({
             label="Category"
             required
             options={categories}
+            loading={loading}
             value={formData.category}
             name="category"
             onChange={onChange}
@@ -124,6 +136,7 @@ const Service = ({
             value={formData.service}
             options={servicesData}
             name="service"
+            loading={loadingServices}
             onChange={onChange}
           />
           <div className="w-full">
@@ -133,7 +146,7 @@ const Service = ({
             >
               Staff
             </label>
-            {staffData.length === 0 ? (
+            {loadingStaff ? (
               <div className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3">
                 Loading...
               </div>
