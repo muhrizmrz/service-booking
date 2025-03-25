@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Step } from "./Step";
+import Step from "./Step";
 import Service from "./Service";
 import Address from "./Address";
 import Proceed from "./Proceed";
@@ -48,9 +48,7 @@ const Booking = () => {
       return false;
     }
     setStatus((prev) => ({ ...prev, service: true }));
-    if (services.length === 0) {
-      setServices((prev) => [...prev, serviceData]);
-    }
+    setServices((prev) => [...prev, serviceData]);
     if (next) {
       setIndex((prev) => prev + 1);
     } else {

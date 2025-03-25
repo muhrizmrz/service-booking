@@ -2,8 +2,6 @@ import React from "react";
 import Input from "./Input";
 
 const Address = ({ formData, setFormData }) => {
-  console.log(formData);
-
   return (
     <div className="w-full p-3">
       <form>

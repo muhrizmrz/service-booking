@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Step = ({
+const Step = ({
   i,
   index,
   text,
@@ -54,3 +54,5 @@ export const Step = ({
     </div>
   );
 };
+
+export default Step;
